@@ -65,7 +65,6 @@ angular.module('uluwatuControllers').controller('credentialController', ['$scope
                 $scope.credentialAzure = {};
                 $scope.modifyStatusMessage($rootScope.error_msg.azure_credential_success1 + result.id + $rootScope.error_msg.azure_credential_success2);
                 $scope.modifyStatusClass("has-success");
-                $scope.getAzureCertification(result.id);
                 $scope.azureCredentialForm.$setPristine();
                 collapseCreateCredentialFormPanel();
             }, function (error) {
