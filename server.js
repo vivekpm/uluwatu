@@ -7,8 +7,9 @@ var io = require('socket.io')(server);
 var session = require('express-session');
 var sessionStore = new session.MemoryStore();
 var cookieParser = require('cookie-parser')(sessionSecret)
+var sessionId = 'uluwatu.sid'
 var sessionSocketIo = require('session.socket.io');
-var sessionSockets = new sessionSocketIo(io, sessionStore, cookieParser);
+var sessionSockets = new sessionSocketIo(io, sessionStore, cookieParser, sessionId);
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
@@ -25,7 +26,7 @@ app.set('view engine', 'html')
 app.use(express.static(path.join(__dirname, 'app/static')));
 app.use(cookieParser);
 app.use(session({
-  name: 'uluwatu.sid',
+  name: sessionId,
   genid: function(req) {
     return uid(30);
   },
