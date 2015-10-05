@@ -659,6 +659,20 @@ angular.module('uluwatuControllers').controller('clusterController', ['$scope', 
             setFileSystem();
         }
 
+        $scope.$watch('cluster.region', function() {
+            if ($rootScope.activeCredential != undefined && $rootScope.activeCredential.cloudPlatform == 'AWS') {
+                 angular.forEach($rootScope.config.AWS.awsRegions, function(region) {
+                    if (region.key == $scope.cluster.region) {
+                        $scope.avZones = region.availabilityZones;
+                        if ($scope.avZones.length > 0) {
+                            $scope.cluster.availabilityZone = $scope.avZones[0];
+                        }
+                        return;
+                    }
+                 });
+            }
+        });
+
         function initPlatformVariants() {
             PlatformVariant.get().$promise.then(function(success) {
                 $scope.platformVariants = success.platformToVariants;

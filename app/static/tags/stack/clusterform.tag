@@ -57,6 +57,14 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-group" ng-show="activeCredential.cloudPlatform == 'AWS' && cluster.region">
+                        <label class="col-sm-3 control-label" for="selectavailabilityZone">Availability Zone</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="selectavailabilityZone" ng-model="cluster.availabilityZone">
+                                <option ng-repeat="avZone in avZones" value="{{avZone}}">{{avZone}}</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="selectClusterNetwork">{{msg.cluster_form_network_label}}</label>
                         <div class="col-sm-9">
