@@ -70,7 +70,7 @@ docker run -d -p 3000:3000 -e PORT=3000 -e SERVICE_NAME=uluwatu --name local_ulu
 Now you can start the local uluwatu just set some environment variable:
 
 ```
-ULU_CLOUDBREAK_ADDRESS=http://192.168.59.103:9090
+ULU_CLOUDBREAK_ADDRESS=http://192.168.59.103:8080
 ULU_PERISCOPE_ADDRESS=http://192.168.59.103:8085
 ULU_IDENTITY_ADDRESS=http://192.168.59.103:8089
 ULU_OAUTH_CLIENT_ID=uluwatu
