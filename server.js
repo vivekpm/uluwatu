@@ -67,6 +67,7 @@ var config = {
   addressResolvingRetryCount: process.env.ULU_ADDRESS_RESOLVING_TIMEOUT ? process.env.ULU_ADDRESS_RESOLVING_TIMEOUT / 2000 : 30,
   subscriptionAddress: null,
   identityServerAddress: null,
+  sultansRedirectAddress: null,
   sultansAddress: null,
   cloudbreakAddress: null,
   periscopeAddress: null,
@@ -89,7 +90,8 @@ function resolveError(err) {
 retryingResolve('http', 'ULU_PERISCOPE_SERVICEID', 'ULU_PERISCOPE_ADDRESS', 'periscopeAddress', setResolvedAddress, resolveError);
 retryingResolve('http', 'ULU_IDENTITY_SERVICEID', 'ULU_IDENTITY_ADDRESS', 'identityServerAddress', setResolvedAddress, resolveError);
 retryingResolve('http', 'ULU_CLOUDBREAK_SERVICEID', 'ULU_CLOUDBREAK_ADDRESS', 'cloudbreakAddress', setResolvedAddress, resolveError);
-retryingResolve('http', 'ULU_SULTANS_SERVICEID', 'ULU_SULTANS_ADDRESS', 'sultansAddress', setResolvedAddress, resolveError);
+retryingResolve('http', 'ULU_SULTANS_SERVICEID', 'ULU_SULTANS_ADDRESS', 'sultansRedirectAddress', setResolvedAddress, resolveError);
+retryingResolve('http', '', 'ULU_SULTANS_BACKEND_ADDRESS', 'sultansAddress', setResolvedAddress, resolveError);
 
 if (!config.clientSecret || !config.hostAddress || !config.clientId) {
   console.log("ULU_HOST_ADDRESS, ULU_OAUTH_CLIENT_ID and ULU_OAUTH_CLIENT_SECRET must be specified!");
@@ -99,7 +101,7 @@ if (!config.clientSecret || !config.hostAddress || !config.clientId) {
 waitingForAddressesAndContinue();
 
 function waitingForAddressesAndContinue() {
-  if ((!config.periscopeAddress || !config.sultansAddress || !config.cloudbreakAddress || !config.identityServerAddress) && config.environmentSet) {
+  if ((!config.periscopeAddress || !config.sultansRedirectAddress || !config.sultansAddress || !config.cloudbreakAddress || !config.identityServerAddress) && config.environmentSet) {
     setTimeout(waitingForAddressesAndContinue, 2000);
   } else if (config.environmentSet) {
     continueInit();
@@ -182,7 +184,7 @@ function continueInit() {
     if (config.subscriptionAddress == null) {
       subscribe()
     }
-    var oauthFlowUrl = config.sultansAddress
+    var oauthFlowUrl = config.sultansRedirectAddress
         + 'oauth/authorize?response_type=code'
         + '&client_id=' + config.clientId
         + '&scope=' + config.clientScopes
@@ -201,7 +203,7 @@ function continueInit() {
           res.clearCookie('connect.sid', { path: '/' });
           res.clearCookie('JSESSIONID', { path: '/' });
           res.clearCookie('uaa_cookie', { path: '/' });
-          res.redirect(config.sultansAddress + '?logout=true&source=' + source)
+          res.redirect(config.sultansRedirectAddress + '?logout=true&source=' + source)
       })
   })
 
@@ -269,7 +271,7 @@ function continueInit() {
   function preventNoCachInResponse(res) {
     res.header("Cache-Control", "no-cache, no-store, must-revalidate");
     res.header("Pragma", "no-cache");
-    res.header("Expires",0); 
+    res.header("Expires",0);
   }
 
   // wildcards should be proxied =================================================

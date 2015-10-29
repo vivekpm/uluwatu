@@ -31,7 +31,7 @@ Via network management you can easily configure the subnet, network id(in case o
 
 ###Manage security groups
 
-Security groups are able to manage a set of security rule that could open ports on the specified protocol and subnet. 
+Security groups are able to manage a set of security rule that could open ports on the specified protocol and subnet.
 
 
 ###Create cluster
@@ -63,6 +63,7 @@ If you'd like to run Uluwatu on your local machine, you should have npm and node
 - `ULU_CLOUDBREAK_ADDRESS`: the address of the Cloudbreak backend (format: `http[s]://[host]:[port]`)
 - `ULU_PERISCOPE_ADDRESS`: the address of the Periscope backend (format: `http[s]://[host]:[port]`)
 - `ULU_SULTANS_ADDRESS`: [Sultans](https://github.com/sequenceiq/sultans) is SequenceIQ's registration, user management and custom login service. If you'd like to have registration and custom login features you should deploy your own Sultans application and provide its base address here or you can use our deployed version on our QA environment. If you'd like to connect to our QA server please contact us for connection details. (format: `http[s]://[host]:[port]`)
+- `ULU_SULTANS_BACKEND_ADDRESS`: Sultans address for internal communication
 - `ULU_IDENTITY_ADDRESS`: the address of the identity server - you'll either need to [run your own](http://blog.sequenceiq.com/blog/2014/10/16/using-uaa-as-an-identity-server/) UAA server properly configured, or you can use our own identity server deployed to our QA environment. If you'd like to connect to our QA server please contact us for connection details. (format: `http[s]://[host]:[port]`)
 - `ULU_OAUTH_CLIENT_ID`: the `client_id` of the Uluwatu app configured in the UAA server
 - `ULU_OAUTH_CLIENT_SECRET`: the `client_secret` of the Uluwatu app configured in the UAA server
@@ -78,6 +79,7 @@ docker run -d --name uluwatu \
  -e "ULU_CLOUDBREAK_ADDRESS=$ULU_CLOUDBREAK_ADDRESS" \
  -e "ULU_PERISCOPE_ADDRESS=$ULU_PERISCOPE_ADDRESS" \
  -e "ULU_SULTANS_ADDRESS=$ULU_SULTANS_ADDRESS" \
+ -e "ULU_SULTANS_BACKEND_ADDRESS=$ULU_SULTANS_ADDRESS" \
  -e "ULU_IDENTITY_ADDRESS=$ULU_IDENTITY_ADDRESS" \
  -e "ULU_OAUTH_CLIENT_ID=$ULU_OAUTH_CLIENT_ID" \
  -e "ULU_OAUTH_CLIENT_SECRET=$ULU_OAUTH_CLIENT_SECRET" \

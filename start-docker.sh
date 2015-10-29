@@ -40,6 +40,14 @@ if [ $MISSING_ENV_VARS ]; then
   exit 1;
 fi
 
+if [ -z "$ULU_SULTANS_BACKEND_ADDRESS" ]; then
+  if [ -n "$ULU_SULTANS_ADDRESS" ]; then
+    ULU_SULTANS_BACKEND_ADDRESS=$ULU_SULTANS_ADDRESS;
+  else
+    ULU_SULTANS_BACKEND_ADDRESS=$ULU_SULTANS_SERVICEID;
+  fi
+fi
+
 cd /uluwatu
 if [ "$ULU_PRODUCTION" = true ]; then
   npm install newrelic
